@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { trackDataInterface } from "../../assets/track-assets/track-data-index";
+import { trackDataInterface } from "../../assets/track-data-index";
 import useAudioPlayer from '../../hooks/useAudioPlayer';
 import "./AudioCard.scss";
 import AudioControls from '../AudioControls/AudioControls';
+import * as moment from "moment";
+import momentDurationFormatSetup from "moment-duration-format";
+momentDurationFormatSetup(moment);
 
 type AudioPlayerProps = {
     tracks: trackDataInterface[];
@@ -14,15 +17,38 @@ const AudioPlayer = ({ tracks }: AudioPlayerProps) => {
 
 	const { title, artist, color, image, audioSrc } = tracks[trackIndex]; 
 
+    // const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer("https://storage.googleapis.com/media-session/elephants-dream/the-wires.mp3#fromHistory");
     const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer(audioSrc);
+    
+    function formatDuration(duration: number) {
+        return moment
+        .duration(duration, "seconds")
+        .format("mm:ss", { trim: false });
+    }
+    
 
     const toPrevTrack = () => {
-        console.log('TODO go to prev');
+        if (trackIndex - 1 < 0) {
+            setTrackIndex(tracks.length - 1);
+        } 
+        else {
+            setTrackIndex(trackIndex - 1);
+        }
     }
 
     const toNextTrack = () => {
-        console.log('TODO go to next');
+        if (trackIndex < tracks.length - 1) {
+            setTrackIndex(trackIndex + 1);
+        } 
+        else {
+            setTrackIndex(0);
+        }
     }
+
+    const currentPercentage = duration ? `${(Number(curTime) / duration) * 100}%` : '0%';
+    const trackStyling = `
+    -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #fff), color-stop(${currentPercentage}, #777))
+    `;
 
     return (
 		<div className="audio-player">
@@ -40,6 +66,20 @@ const AudioPlayer = ({ tracks }: AudioPlayerProps) => {
                     onPrevClick={toPrevTrack}
                     setPlaying={setPlaying}
                 />
+                <input
+                    type="range"
+                    value={curTime}
+                    step="1"
+                    min="0"
+                    max={duration ? duration : `${duration}`}
+                    className="progress"
+                    onChange={(e) => setClickedTime(Number(e.target.value))}
+                    style={{ background: trackStyling }}
+                />
+                <div className={"time-display"}>
+                    <div>{formatDuration(Number(curTime))}</div>
+                    <div>{formatDuration(Number(duration))}</div>
+                </div>
 			</div>
 		</div>
 	);

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 import AudioCard from "./components/AudioCard/AudioCard";
-import { trackData } from "./assets/track-assets/track-data-index";
+import { trackData } from "./assets/track-data-index";
 
 function App() {
   return (

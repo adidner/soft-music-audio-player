@@ -5,9 +5,11 @@ function useAudioPlayer(source: string) {
   const [curTime, setCurTime] = useState<number>();
   const [playing, setPlaying] = useState(false);
   const [clickedTime, setClickedTime] = useState<number | null>();
+  
   const audio = useRef<HTMLAudioElement>(new Audio(source));
 
   useEffect(() => {
+
     // state setters wrappers
     const setAudioData = () => {
       setDuration(audio.current.duration);
@@ -35,6 +37,13 @@ function useAudioPlayer(source: string) {
       audio.current.removeEventListener("timeupdate", setAudioTime);
     };
   }, [playing, clickedTime, curTime]);
+
+  useEffect(() => {
+      audio.current.pause();
+      audio.current = new Audio(source);
+      audio.current.play();
+      setPlaying(true);
+  },[source])
 
   return {
     curTime,

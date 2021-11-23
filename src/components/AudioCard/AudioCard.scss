@@ -30,3 +30,31 @@
     font-weight: 300;
     margin-top: 0;
   }
+
+  input[type=range] {
+    height: 5px;
+    -webkit-appearance: none;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background: #3b7677;
+    transition: background 0.2s ease;
+    cursor: pointer;
+  }
+
+
+  .time-display {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    visibility: hidden;
+  }
+  input[type="range"]::-moz-range-thumb {
+    visibility: hidden;
+  }
+  input[type="range"]::-ms-thumb {
+    visibility: hidden;
+  }
