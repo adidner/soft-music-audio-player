@@ -5,6 +5,7 @@ import "./AudioCard.scss";
 import AudioControls from '../AudioControls/AudioControls';
 import * as moment from "moment";
 import momentDurationFormatSetup from "moment-duration-format";
+import Backdrop from '../Backdrop/Backdrop';
 momentDurationFormatSetup(moment);
 
 type AudioPlayerProps = {
@@ -81,6 +82,11 @@ const AudioPlayer = ({ tracks }: AudioPlayerProps) => {
                     <div>{formatDuration(Number(duration))}</div>
                 </div>
 			</div>
+            <Backdrop
+                trackIndex={trackIndex}
+                activeColor={color}
+                isPlaying={playing}
+            />
 		</div>
 	);
 }
