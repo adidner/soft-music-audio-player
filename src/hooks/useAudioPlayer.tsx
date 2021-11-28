@@ -6,42 +6,42 @@ function useAudioPlayer(source: string) {
   const [playing, setPlaying] = useState(false);
   const [clickedTime, setClickedTime] = useState<number | null>();
   
-  const audio = useRef<HTMLAudioElement>(new Audio(source));
+  const audioRef = useRef<HTMLAudioElement>(new Audio(source));
 
   useEffect(() => {
 
     // state setters wrappers
     const setAudioData = () => {
-      setDuration(audio.current.duration);
-      setCurTime(audio.current.currentTime);
+      setDuration(audioRef.current.duration);
+      setCurTime(audioRef.current.currentTime);
     };
 
-    const setAudioTime = () => setCurTime(audio.current.currentTime);
+    const setAudioTime = () => setCurTime(audioRef.current.currentTime);
 
     // DOM listeners: update React state on DOM events
-    audio.current.addEventListener("loadeddata", setAudioData);
+    audioRef.current.addEventListener("loadeddata", setAudioData);
 
-    audio.current.addEventListener("timeupdate", setAudioTime);
+    audioRef.current.addEventListener("timeupdate", setAudioTime);
 
     // React state listeners: update DOM on React state changes
-    playing ? audio.current.play() : audio.current.pause();
+    playing ? audioRef.current.play() : audioRef.current.pause();
 
     if (clickedTime && clickedTime !== curTime) {
-      audio.current.currentTime = clickedTime;
+      audioRef.current.currentTime = clickedTime;
       setClickedTime(null);
     }
 
     // effect cleanup
     return () => {
-      audio.current.removeEventListener("loadeddata", setAudioData);
-      audio.current.removeEventListener("timeupdate", setAudioTime);
+      audioRef.current.removeEventListener("loadeddata", setAudioData);
+      audioRef.current.removeEventListener("timeupdate", setAudioTime);
     };
   }, [playing, clickedTime, curTime]);
 
   useEffect(() => {
-      audio.current.pause();
-      audio.current = new Audio(source);
-      audio.current.play();
+      audioRef.current.pause();
+      audioRef.current = new Audio(source);
+      audioRef.current.play();
       setPlaying(true);
   },[source])
 
@@ -50,7 +50,8 @@ function useAudioPlayer(source: string) {
     duration,
     playing,
     setPlaying,
-    setClickedTime
+    setClickedTime,
+    audioRef
   };
 }
 

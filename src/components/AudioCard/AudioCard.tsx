@@ -19,8 +19,13 @@ const AudioPlayer = ({ tracks }: AudioPlayerProps) => {
 	const { title, artist, color, image, audioSrc } = tracks[trackIndex]; 
 
     // const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer("https://storage.googleapis.com/media-session/elephants-dream/the-wires.mp3#fromHistory");
-    const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer(audioSrc);
+    const { curTime, duration, playing, setPlaying, setClickedTime, audioRef } = useAudioPlayer(audioSrc);
     
+    audioRef.current.addEventListener('ended',function(){
+        toNextTrack();
+    });
+
+
     function formatDuration(duration: number) {
         return moment
         .duration(duration, "seconds")

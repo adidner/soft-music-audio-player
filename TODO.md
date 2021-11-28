@@ -1,7 +1,6 @@
 # Next steps for this project 
 
 
-1. fix bug so when songs end it goes to next song
 1. Hygen templates to let me add music easily
 1. Randomized colors for the json object stuff -> not even in file so much as randomly chosen at transition time?
 1. Randomized order for the json object stuff
