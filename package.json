@@ -44,6 +44,7 @@
     ]
   },
   "devDependencies": {
-    "@types/moment-duration-format": "^2.2.3"
+    "@types/moment-duration-format": "^2.2.3",
+    "hygen": "^6.1.0"
   }
 }
