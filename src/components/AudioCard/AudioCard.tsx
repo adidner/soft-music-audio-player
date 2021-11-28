@@ -12,11 +12,19 @@ type AudioPlayerProps = {
     tracks: trackDataInterface[];
 };
 
+
+function formatDuration(duration: number) {
+    return moment
+    .duration(duration, "seconds")
+    .format("mm:ss", { trim: false });
+}
+
+
 const AudioPlayer = ({ tracks }: AudioPlayerProps) => {
     // State
     const [trackIndex, setTrackIndex] = useState(0);
 
-	const { title, artist, color, image, audioSrc } = tracks[trackIndex]; 
+	const { title, artist, image, audioSrc } = tracks[trackIndex]; 
 
     // const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer("https://storage.googleapis.com/media-session/elephants-dream/the-wires.mp3#fromHistory");
     const { curTime, duration, playing, setPlaying, setClickedTime, audioRef } = useAudioPlayer(audioSrc);
@@ -26,11 +34,7 @@ const AudioPlayer = ({ tracks }: AudioPlayerProps) => {
     });
 
 
-    function formatDuration(duration: number) {
-        return moment
-        .duration(duration, "seconds")
-        .format("mm:ss", { trim: false });
-    }
+    
     
 
     const toPrevTrack = () => {
@@ -89,7 +93,6 @@ const AudioPlayer = ({ tracks }: AudioPlayerProps) => {
 			</div>
             <Backdrop
                 trackIndex={trackIndex}
-                activeColor={color}
                 isPlaying={playing}
             />
 		</div>

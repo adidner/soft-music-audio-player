@@ -3,19 +3,26 @@ import React, { useEffect } from 'react';
 import "./Backdrop.scss"
 
 interface BackdropProps {
-  activeColor: string;
   trackIndex: number;
   isPlaying: boolean;
 }
 
 
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 const Backdrop = ({
-  activeColor,
   trackIndex,
   isPlaying,
 }: BackdropProps) => {
   useEffect(() => {
-    document.documentElement.style.setProperty('--active-color', activeColor);
+    document.documentElement.style.setProperty('--active-color', getRandomColor());
   }, [trackIndex]);
 
   return (
